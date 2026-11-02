@@ -1,38 +1,77 @@
-# AI Short Drama Factory
+# Campus Drama Factory
 
-A Python + Streamlit prototype for 60-second school romance episodes. It runs entirely locally without API keys or paid credits.
+A local, free MVP for producing 60-second school romance episode prototypes. Python FastAPI backend, Streamlit dashboard, SQLite production state and FFmpeg editing. Stories focus on innocent crushes, friendship, misunderstandings and graduation.
 
-## Start
+**Current milestone:** complete mock production with test footage. No OpenAI, Runway or TTS requests are made. Output is colored placeholder footage, silent audio and timed English subtitle tracks, not photorealistic AI footage. There is no paid generation switch.
 
-Requires Python 3.11+ and FFmpeg (including ffprobe and libx264) on PATH. On Ubuntu install FFmpeg with `sudo apt-get update && sudo apt-get install -y ffmpeg`.
+## Project structure
 
-```bash
-cd /workspace/Ai-short
+- `app.py`: local dashboard and backend client
+- `drama_factory/api.py`: FastAPI jobs, character library, review and export endpoints
+- `drama_factory/store.py`: SQLite state and transactional CAD reservations
+- `drama_factory/production.py`: resumable shot rendering and two-aspect assembly
+- `drama_factory/budget.py`: conservative USD-to-CAD quotes with tax margin
+- `drama_factory/core.py`: deterministic story generator and original rendering utilities
+- `drama_factory/providers.py`: disabled Runway adapter and provider protocol
+- `tests/`: API, dashboard, FFmpeg and budget tests
+- `data/`: ignored database and generated assets
+
+## Windows setup (PowerShell)
+
+Install Python 3.11+ and FFmpeg, with `ffmpeg` and `ffprobe` on PATH. For example, use `winget install Python.Python.3.12` and `winget install Gyan.FFmpeg`, then reopen the terminal. Verify `python --version`, `ffmpeg -version` and `ffprobe -version`.
+
+```powershell
+cd Ai-short
 python -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
-# Optional: copy .env.example to .env; no key is needed for mock mode.
-.venv/bin/streamlit run app.py --server.headless true
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+Copy-Item .env.example .env
+.venv\Scripts\python.exe -m uvicorn drama_factory.api:app --host 127.0.0.1 --port 8000
 ```
 
-Open the Streamlit address printed in your terminal when running locally. Edit the premise and reusable male/female character profiles, then click **Generate Episode**. Profiles persist across Streamlit reruns in the current session and are exported with every storyboard. Defaults live in `drama_factory/core.py`.
+In a second terminal in the same repository:
 
-Each unique `outputs/<episode-id>/` directory contains a storyboard with character descriptions, six 10-second scene clips, captions, a budget report, and the assembled portrait MP4. The MP4 contains H.264 video, silent AAC audio, and a selectable subtitle track; captions can also be downloaded as SRT. Some browser players do not show embedded subtitles: use the storyboard or enable subtitles in a compatible player.
+```powershell
+.venv\Scripts\python.exe -m streamlit run app.py --browser.gatherUsageStats false
+```
 
-## What works now
+Open Streamlit's printed local address. The backend API documentation is available locally at port 8000 under `/docs`.
 
-- Deterministic six-beat romance planning incorporating your premise and character names.
-- Real FFmpeg rendering and assembly of a 60-second, 360×640 mock video.
-- Dashboard previews and downloads; mock spend is CAD $0.00.
-- Decimal-based budget checks reject invalid, negative, nonfinite and over-CAD-$18 totals.
-- Provider protocol, episode preflight cost authorization, and disabled Runway adapter boundary.
+## Linux/macOS setup
 
-Mock output is colored placeholder footage, not generated cinematic imagery, narration or music. The template is intentionally deterministic; the premise is included in scene prompts rather than interpreted by an LLM. Generated files remain on disk until manually deleted.
+Install Python 3.11+ and FFmpeg (Ubuntu: `sudo apt-get install ffmpeg`; macOS: `brew install ffmpeg`).
 
-## Runway integration architecture
+```bash
+cd /workspace/Ai-short  # or your local checkout
+python -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+cp .env.example .env
+.venv/bin/python -m uvicorn drama_factory.api:app --host 127.0.0.1 --port 8000
+# Second terminal, same checkout:
+.venv/bin/python -m streamlit run app.py --browser.gatherUsageStats false
+```
 
-`drama_factory/providers.py` defines scene quoting and clip generation interfaces. `RunwayProvider` deliberately raises `NotImplementedError`; no HTTP SDK or paid endpoint is invoked. `.env.example` documents the future key name only. Setting a key does not enable paid generation.
+Use one backend process per SQLite database; multiple API workers are unsupported. This local MVP has no authentication: bind to loopback, and do not expose it publicly. Keep both terminals in the same working directory. Credentials belong only in `.env` or environment variables; never commit keys.
 
-Before enabling real calls, implement a separately reviewed adapter using current official Runway documentation: choose model and supported durations, provision reference character assets, price all scenes in CAD with an explicit exchange rate and tax/retry buffer, reserve the entire episode budget before submission, persist task IDs for idempotency, poll with bounded retries, download and validate media, and reconcile charges. API billing cannot be guaranteed by an estimate alone; use provider/account spending controls as well. The mock release cannot spend credits.
+## Workflow and persistence
+
+Save reusable male and female profiles in Character Library, including hairstyle, face, clothing, voice and reference-image metadata. Generate New Episode creates six ten-second shots with an opening hook, emotional progression, misunderstanding/twist and ending. The template includes your premise in prompts; it does not yet use an LLM to interpret it. Preview the structured storyboard, refresh shot progress, inspect footage, and mark consistency as approved or inconsistent. This is human review, not automatic visual detection.
+
+Exports include 9:16 (360×640) and 16:9 (640×360) MP4s, SRT and storyboard JSON. Landscape uses padded portrait footage. Embedded subtitles can be enabled in compatible players; browser support varies. Original English dialogue is generated by the template; custom Chinese text and multilingual TTS are future work. There is no unnecessary upscaling. Music/SFX are intentionally omitted until user-supplied licensed assets and mixing are implemented.
+
+SQLite and assets live under `CAMPUS_DATA_DIR` (default `data`). Completed shots survive process restarts. On backend restart interrupted running jobs become failed; select Resume Production to reuse completed shot files and rebuild exports. Failed renders retain their error. Queued jobs can also resume. Files are written through temporary MP4s before completion is recorded. Do not run multiple backend processes on one data directory. Data is retained until manually removed.
+
+## Budget and provider roadmap
+
+Hard episode cap: CAD $18. Quotes use Decimal, configurable USD/CAD and tax margin inputs, rounding upward to cents. SQLite atomically reserves costs before each mock rendering request; retries must fit remaining committed/reserved spend. Request IDs prevent double reservation. Mock actual costs are recorded as zero. Interrupted reservations remain held conservatively. Actual paid cost reconciliation is not implemented; never treat mock accounting as a verified billing integration.
+
+`USD_TO_CAD`, `TAX_MARGIN`, OpenAI/Runway keys and TTS settings in `.env.example` describe future provider configuration; the mock path does not consume these settings or credentials. The cost utility accepts explicit rate/margin values for testing and future adapters.
+
+Next milestones, each separately tested before enabling spending:
+
+1. OpenAI structured story JSON with schema validation and budget reservation.
+2. Runway reference-image generation and image-to-video, using current official endpoint/model documentation. Gen-4 Turbo and Kling 3.0 Standard are requested candidates, **not verified supported models in this release**. No endpoints or unsupported capabilities are guessed.
+3. Persistent provider task IDs, bounded polling, idempotency, safe downloads, per-shot model choices, actual-charge reconciliation and review gates. Preflight all shots, exchange-rate/tax buffers and each potentially billable retry. Account-level provider controls are also required for a true billing cap.
+4. Configurable TTS, Chinese/English alignment, licensed music/SFX and visual consistency detection.
 
 ## Tests
 
@@ -40,4 +79,4 @@ Before enabling real calls, implement a separately reviewed adapter using curren
 .venv/bin/python -m pytest -q
 ```
 
-Tests exercise story planning, invalid inputs, the CAD limit and cumulative quotes, disabled paid generation, dashboard interaction, and actual FFmpeg output including full video decoding, duration, resolution and stream validation. No API credentials are required.
+On Windows use `.venv\Scripts\python.exe -m pytest -q`. Tests generate and inspect real local MP4s, exercise API/dashboard production, persistence/resume, character edits, review flags, quote rounding and cap enforcement. They require FFmpeg but no credentials and spend no API credits.

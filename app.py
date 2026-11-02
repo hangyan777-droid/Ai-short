@@ -1,36 +1,78 @@
-from pathlib import Path
+import os
+import httpx
 import streamlit as st
 from dotenv import load_dotenv
-from drama_factory.core import CHARACTERS, Character, generate_mock, plan_episode
 
 load_dotenv()
-st.set_page_config(page_title='AI Short Drama Factory', page_icon='🎬')
-st.title('🎬 AI Short Drama Factory')
-st.caption('60-second school romance episodes · Mock mode · CAD $0 / $18 per episode')
-st.info('Mock videos use colored scene cards, timed subtitle tracks and silent audio. Paid Runway generation is disabled.')
-premise = st.text_area('Story premise', 'Two final-year students connect through a forgotten sketchbook.', max_chars=500)
-profiles = []
-with st.expander('Reusable character profiles', expanded=True):
-    for index, character in enumerate(CHARACTERS):
-        name = st.text_input(f'{character.role.title()} name', character.name, key=f'name_{index}')
-        description = st.text_area(f'{character.role.title()} profile', character.description, key=f'profile_{index}')
-        profiles.append(Character(name, character.role, description))
-if st.button('Generate Episode', type='primary'):
-    try:
-        with st.spinner('Planning and assembling your mock episode...'):
-            episode = plan_episode(premise, tuple(profiles))
-            path = generate_mock(episode, Path(__file__).parent / 'outputs')
-            st.session_state['episode'] = episode
-            st.session_state['video'] = str(path)
-        st.success('Episode complete. Actual cost: CAD $0.00')
-    except (ValueError, RuntimeError, OSError) as error:
-        st.error(str(error))
-if 'video' in st.session_state:
-    path = Path(st.session_state['video'])
-    st.subheader(st.session_state['episode'].title)
-    st.video(str(path))
-    st.download_button('Download episode', path.read_bytes(), 'episode.mp4', 'video/mp4')
-    st.download_button('Download storyboard and character profiles', (path.parent / 'storyboard.json').read_bytes(), 'storyboard.json', 'application/json')
-    st.download_button('Download captions', (path.parent / 'captions.srt').read_bytes(), 'captions.srt')
-    for scene in st.session_state['episode'].scenes:
-        st.write(f'**{scene.title} · {scene.seconds}s** — {scene.action}')
+API = os.getenv('CAMPUS_API_URL','http://127.0.0.1:8000').rstrip('/')
+st.set_page_config(page_title='Campus Drama Factory',page_icon='🎬',layout='wide')
+st.title('🎬 Campus Drama Factory')
+st.caption('Innocent school romance · 60 seconds · CAD $18 maximum · Free mock mode')
+st.info('Local test footage only. OpenAI, Runway and TTS calls are disabled. No credits are spent.')
+
+def request(method,path,**kwargs):
+    response = httpx.request(method,API+path,timeout=30,**kwargs)
+    response.raise_for_status()
+    return response
+
+try:
+    request('GET','/health')
+    library, production = st.tabs(['Character Library','Episode Production'])
+    with library:
+        for profile in request('GET','/characters').json():
+            with st.form(profile['id']):
+                st.subheader(profile['role'].title())
+                fields = {}
+                for key in ('name','description','hairstyle','facial_features','clothing','voice','reference_image'):
+                    fields[key] = st.text_input(key.replace('_',' ').title(),profile.get(key,''),key=profile['id']+key)
+                st.caption('Reference image: local path or URL metadata only; mock mode does not fetch images.')
+                if st.form_submit_button('Save Profile'):
+                    request('POST','/characters',json={**fields,'role':profile['role']})
+                    st.success('Saved to SQLite')
+    with production:
+        premise = st.text_area('Story premise','A forgotten sketchbook brings two students together.',max_chars=500)
+        if st.button('Generate New Episode',type='primary'):
+            result = request('POST','/jobs',json={'premise':premise}).json()
+            st.session_state['selected_job'] = result['id']
+            st.success('Production queued. Refresh progress to inspect it.')
+        st.button('Refresh Progress')
+        jobs = request('GET','/jobs').json()
+        if jobs:
+            ids = [j['id'] for j in jobs]
+            selected = st.selectbox('Production jobs',ids,index=ids.index(st.session_state.get('selected_job')) if st.session_state.get('selected_job') in ids else 0)
+            job = request('GET',f'/jobs/{selected}').json()
+            st.write('Status:',job['status'])
+            st.progress(sum(s['status']=='complete' for s in job['shots'])/6)
+            st.subheader('Production Cost')
+            st.json(job['cost'])
+            if job['error']:
+                st.error(job['error'])
+            if job['status'] in ('failed','queued') and st.button('Resume Production'):
+                request('POST',f'/jobs/{selected}/resume')
+                st.rerun()
+            with st.expander('Script and Storyboard Preview'):
+                st.json(job['storyboard'])
+            st.subheader('Per-Shot Review')
+            for shot in job['shots']:
+                i = shot['idx']
+                with st.expander(f"Shot {i+1}: {shot['status']} · {shot['review']}"):
+                    st.write(job['storyboard']['scenes'][i])
+                    st.selectbox('Model',['mock'],key=f'{selected}-{i}-model')
+                    st.caption('Paid model selection and automatic consistency detection are not enabled.')
+                    if shot['status']=='complete':
+                        st.video(request('GET',f'/jobs/{selected}/assets/shot_{i}.mp4').content)
+                    review = st.selectbox('Visual consistency',['pending','approved','inconsistent'],index=['pending','approved','inconsistent'].index(shot['review']),key=f'{selected}-{i}-review')
+                    if st.button('Save Review',key=f'{selected}-{i}-save'):
+                        request('POST',f'/jobs/{selected}/shots/{i}/review',json={'review':review})
+                        st.rerun()
+            if job['status']=='complete':
+                st.subheader('Export Final Video')
+                for aspect in ('portrait','landscape'):
+                    video = request('GET',f'/jobs/{selected}/assets/{aspect}.mp4').content
+                    st.download_button(f'Download {aspect} MP4',video,f'{aspect}.mp4','video/mp4')
+                st.video(request('GET',f'/jobs/{selected}/assets/portrait.mp4').content)
+                for asset in ('captions.srt','storyboard.json'):
+                    st.download_button(f'Download {asset}',request('GET',f'/jobs/{selected}/assets/{asset}').content,asset)
+except (httpx.HTTPError,ValueError) as error:
+    st.error(f'Backend unavailable or request rejected: {error}')
+    st.code('python -m uvicorn drama_factory.api:app --host 127.0.0.1 --port 8000')
