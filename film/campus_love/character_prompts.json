@@ -1,0 +1,50 @@
+[
+  {
+    "character": "haruto",
+    "view": "front",
+    "model": "gen4_image",
+    "ratio": "720:1280",
+    "prompt": "Photorealistic Japanese live-action coming-of-age film reference. Fictional person, not a celebrity likeness. Natural skin pores, soft window daylight, restrained warm color, quiet expression. No anime, idol styling, beauty filter, skin smoothing, logos or text. Haruto Sato, a fictional 17-year-old Japanese schoolboy. Soft black layered hair with a natural fringe, dark-brown eyes, natural youthful facial proportions, slim build, gentle slightly shy expression. White short-sleeve school shirt, navy straight-leg trousers, plain white sneakers; no accessories. Front-facing head-and-shoulders portrait, eye-level 85mm-style lens, both ears where visible, hair fully in frame, pale neutral background, relaxed closed mouth. Recognizable natural face, simple framing, vertical 9:16.",
+    "reference": null
+  },
+  {
+    "character": "haruto",
+    "view": "side",
+    "model": "gen4_image",
+    "ratio": "720:1280",
+    "prompt": "Photorealistic Japanese live-action coming-of-age film reference. Fictional person, not a celebrity likeness. Natural skin pores, soft window daylight, restrained warm color, quiet expression. No anime, idol styling, beauty filter, skin smoothing, logos or text. Haruto Sato, a fictional 17-year-old Japanese schoolboy. Soft black layered hair with a natural fringe, dark-brown eyes, natural youthful facial proportions, slim build, gentle slightly shy expression. White short-sleeve school shirt, navy straight-leg trousers, plain white sneakers; no accessories. Use @identity as the identity reference: the same face, hairline, age and outfit. True left-side profile, head and shoulders, eye-level lens, nose and ear silhouette clear, pale neutral background, relaxed closed mouth, vertical 9:16.",
+    "reference": "assets/characters/haruto/front.png"
+  },
+  {
+    "character": "haruto",
+    "view": "full",
+    "model": "gen4_image",
+    "ratio": "720:1280",
+    "prompt": "Photorealistic Japanese live-action coming-of-age film reference. Fictional person, not a celebrity likeness. Natural skin pores, soft window daylight, restrained warm color, quiet expression. No anime, idol styling, beauty filter, skin smoothing, logos or text. Haruto Sato, a fictional 17-year-old Japanese schoolboy. Soft black layered hair with a natural fringe, dark-brown eyes, natural youthful facial proportions, slim build, gentle slightly shy expression. White short-sleeve school shirt, navy straight-leg trousers, plain white sneakers; no accessories. Use @identity as the identity reference: the same face, hair, age and outfit. Head-to-toe front-facing standing reference, eye-level 50mm-style lens, ordinary school posture, arms at sides with hands visible, both shoes fully in frame, pale neutral background, vertical 9:16.",
+    "reference": "assets/characters/haruto/front.png"
+  },
+  {
+    "character": "aoi",
+    "view": "front",
+    "model": "gen4_image",
+    "ratio": "720:1280",
+    "prompt": "Photorealistic Japanese live-action coming-of-age film reference. Fictional person, not a celebrity likeness. Natural skin pores, soft window daylight, restrained warm color, quiet expression. No anime, idol styling, beauty filter, skin smoothing, logos or text. Aoi Nakamura, a fictional 17-year-old Japanese schoolgirl. Straight dark hair with soft bangs, dark-brown eyes, natural youthful facial proportions, no visible makeup, warm observant expression. White school blouse, loose ivory knit cardigan, navy knee-length pleated skirt, white socks, brown loafers. Front-facing head-and-shoulders portrait, eye-level 85mm-style lens, both ears where visible, hair fully in frame, pale neutral background, relaxed closed mouth. Recognizable natural face, simple framing, vertical 9:16.",
+    "reference": null
+  },
+  {
+    "character": "aoi",
+    "view": "side",
+    "model": "gen4_image",
+    "ratio": "720:1280",
+    "prompt": "Photorealistic Japanese live-action coming-of-age film reference. Fictional person, not a celebrity likeness. Natural skin pores, soft window daylight, restrained warm color, quiet expression. No anime, idol styling, beauty filter, skin smoothing, logos or text. Aoi Nakamura, a fictional 17-year-old Japanese schoolgirl. Straight dark hair with soft bangs, dark-brown eyes, natural youthful facial proportions, no visible makeup, warm observant expression. White school blouse, loose ivory knit cardigan, navy knee-length pleated skirt, white socks, brown loafers. Use @identity as the identity reference: the same face, hairline, age and outfit. True left-side profile, head and shoulders, eye-level lens, nose and ear silhouette clear, pale neutral background, relaxed closed mouth, vertical 9:16.",
+    "reference": "assets/characters/aoi/front.png"
+  },
+  {
+    "character": "aoi",
+    "view": "full",
+    "model": "gen4_image",
+    "ratio": "720:1280",
+    "prompt": "Photorealistic Japanese live-action coming-of-age film reference. Fictional person, not a celebrity likeness. Natural skin pores, soft window daylight, restrained warm color, quiet expression. No anime, idol styling, beauty filter, skin smoothing, logos or text. Aoi Nakamura, a fictional 17-year-old Japanese schoolgirl. Straight dark hair with soft bangs, dark-brown eyes, natural youthful facial proportions, no visible makeup, warm observant expression. White school blouse, loose ivory knit cardigan, navy knee-length pleated skirt, white socks, brown loafers. Use @identity as the identity reference: the same face, hair, age and outfit. Head-to-toe front-facing standing reference, eye-level 50mm-style lens, ordinary school posture, arms at sides with hands visible, both shoes fully in frame, pale neutral background, vertical 9:16.",
+    "reference": "assets/characters/aoi/front.png"
+  }
+]

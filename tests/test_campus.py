@@ -231,3 +231,49 @@ def test_subtitles_and_mock_promotion_guard(setup):
     (root/'MOCK_ONLY').touch()
     with pytest.raises(ValueError,match='separate'):
         assemble(root,story,state,mock=False)
+
+
+def test_character_scopes_require_face_review(setup):
+    root,story,p,state=setup
+    front=campus.make_plan('characters',root,story,p,state,views=['front'])
+    assert len(front['tasks'])==2
+    assert front['total_committed_cad']=='0.26'
+    assert not front['blockers']
+    for who in story['characters']:
+        path=campus.CHARACTERS/who/'front.png'
+        path.parent.mkdir(parents=True,exist_ok=True)
+        Image.new('RGB',(720,1280),'gray').save(path)
+    plan=campus.make_plan('characters',root,story,p,state,views=['side','full'])
+    assert len(plan['tasks'])==4
+    assert plan['total_committed_cad']=='0.52'
+    assert len(plan['blockers'])==2
+    for who in story['characters']:
+        campus.approve_asset(SimpleNamespace(asset='portrait',character=who),root,story,state)
+    approved=campus.make_plan('characters',root,story,p,state,views=['side','full'])
+    assert not approved['blockers']
+    assert all(t['refs'][0][1]=='identity' for t in approved['tasks'])
+    Image.new('RGB',(720,1280),'blue').save(campus.CHARACTERS/'aoi/front.png')
+    changed=campus.make_plan('characters',root,story,p,state,views=['side','full'])
+    assert changed['blockers']
+    assert digest(changed)!=digest(approved)
+
+
+def test_character_prompts_and_permanent_approval(setup):
+    from drama_factory.character_reference import prompt,review_sheet
+    root,story,p,state=setup
+    refs(story)
+    for who,c in story['characters'].items():
+        for view in ('front','side','full'):
+            text=prompt(who,c,view)
+            assert len(text.encode('utf-16-le'))//2<=1000
+            assert 'Photorealistic Japanese live-action' in text
+            assert 'No anime, idol styling' in text
+            assert ('@identity' in text)==(view!='front')
+    sheet=review_sheet(campus.CHARACTERS,root/'character_review.jpg')
+    with Image.open(sheet) as image:
+        assert image.size==(720,1000)
+    campus.approve_asset(SimpleNamespace(asset='characters'),root,story,state)
+    manifest=json.loads((campus.CHARACTERS/'APPROVED.json').read_text())
+    assert len(manifest['files'])==6
+    assert manifest['approval']==campus.bible_fingerprint(story)
+    assert state.approved('characters',manifest['approval'])

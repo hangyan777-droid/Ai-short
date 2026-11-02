@@ -8,3 +8,4 @@ data/
 assets/characters/**/*.png
 assets/characters/**/*.partial*
 film/campus_love/pricing.local.json
+assets/characters/APPROVED.json

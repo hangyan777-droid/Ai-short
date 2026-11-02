@@ -108,7 +108,7 @@ def write_documents(root,story,p):
     return report
 
 
-def make_plan(action,root,story,p,state,shot=1):
+def make_plan(action,root,story,p,state,shot=1,views=None):
     tasks=[]
     blockers=[]
     dependencies={}
@@ -161,11 +161,23 @@ def make_plan(action,root,story,p,state,shot=1):
             except (OSError,ValueError):
                 block('A real test shot must be generated and approved before full production')
     if action=='characters':
+        from .character_reference import prompt
+        selected=views or ('front','side','full')
+        if len(set(selected))!=len(selected):
+            raise ValueError('Do not repeat a character view')
+        if 'front' not in selected:
+            for who,c in story['characters'].items():
+                try:
+                    image_uri(CHARACTERS/who/'front.png')
+                    fp=portrait_fingerprint(story,who)
+                    dependencies[f'portrait:{who}']=fp
+                    if not state.approved(f'portrait:{who}',fp):
+                        block(f'Review {who} front portrait and approve --asset portrait --character {who}')
+                except (OSError,ValueError) as error:
+                    block(str(error))
         for who,c in story['characters'].items():
-            for view in ('front','side','full'):
-                description=f"{story['style']} {c['name']}, fictional Japanese student age {c['age']}. {c['appearance']} {c['wardrobe']}"
-                instruction={'front':'Front-facing portrait, neutral background, natural expression.','side':'Side-angle portrait, exactly the same person as @identity.','full':'Full-body standing reference, exactly the same person as @identity, ordinary school attire.'}[view]
-                tasks.append(dict(id=f'image:{who}:{view}',kind='image',target=str(CHARACTERS/who/f'{view}.png'),model='gen4_image',prompt=description+' '+instruction,refs=[] if view=='front' else [(str(CHARACTERS/who/'front.png'),'identity')],usd=p['gen4_image_usd']))
+            for view in selected:
+                tasks.append(dict(id=f'image:{who}:{view}',kind='image',target=str(CHARACTERS/who/f'{view}.png'),model='gen4_image',prompt=prompt(who,c,view),refs=[] if view=='front' else [(str(CHARACTERS/who/'front.png'),'identity')],usd=p['gen4_image_usd']))
     elif action=='keyframes':
         for s in story['shots']:
             refs=[(str(CHARACTERS/w/'front.png'),w) for w in s['characters']]
@@ -237,10 +249,21 @@ def execute(plan,state):
         save(state.root/'cost_report.json',state.report())
 
 
+def portrait_fingerprint(story,who):
+    return digest({'character':story['characters'][who],'portrait':sha(CHARACTERS/who/'front.png')})
+
+
 def approve_asset(args,root,story,state):
     if (root/'MOCK_ONLY').exists():
         raise ValueError('Mock footage cannot satisfy real production approval')
-    if args.asset=='characters':
+    if args.asset=='portrait':
+        who=args.character
+        if who not in story['characters']:
+            raise ValueError('--character haruto or aoi is required for portrait approval')
+        image_uri(CHARACTERS/who/'front.png')
+        fingerprint=portrait_fingerprint(story,who)
+        name=f'portrait:{who}'
+    elif args.asset=='characters':
         fingerprint=bible_fingerprint(story)
         name='characters'
     elif args.asset=='keyframes':
@@ -254,19 +277,23 @@ def approve_asset(args,root,story,state):
             raise ValueError('Only a completed, unchanged real API clip may be approved')
         fingerprint=test_fingerprint(root,story,args.shot); name='test-shot'
     state.approve(name,fingerprint)
+    if name=='characters':
+        save(CHARACTERS/'APPROVED.json',dict(approval=fingerprint,characters=story['characters'],files={f'{who}/{view}.png':sha(CHARACTERS/who/f'{view}.png') for who in story['characters'] for view in ('front','side','full')},note='Human-approved permanent references. Back up with production state; never replace automatically.'))
     print(f'Recorded human review approval: {name}. This is not permission for paid API calls.')
 
 
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action',choices=['preproduce','characters','keyframes','test-shot','produce','approve','render-test','edit','reconcile'])
+    parser.add_argument('action',choices=['preproduce','characters','keyframes','test-shot','produce','approve','render-test','edit','reconcile','character-sheet'])
     parser.add_argument('--episode',type=int,choices=[1],default=1)
     parser.add_argument('--shot',type=int,choices=range(1,13),default=1)
     parser.add_argument('--output',type=Path,default=ROOT/'outputs/episode_01')
     parser.add_argument('--pricing',type=Path,default=PRICING)
     parser.add_argument('--execute',action='store_true',help='Potentially paid; requires approval of exact quote hash')
     parser.add_argument('--approve-quote',default='')
-    parser.add_argument('--asset',choices=['characters','keyframes','keyframe','test-shot'])
+    parser.add_argument('--asset',choices=['portrait','characters','keyframes','keyframe','test-shot'])
+    parser.add_argument('--character',choices=['haruto','aoi'])
+    parser.add_argument('--views',nargs='+',choices=['front','side','full'])
     parser.add_argument('--request-id')
     parser.add_argument('--actual-cad')
     parser.add_argument('--billing-source',default='')
@@ -283,6 +310,9 @@ def main(argv=None):
             save(root/'cost_report.json',state.report())
             print(json.dumps(report,ensure_ascii=False,indent=2))
             print('Created:',root/'PRODUCTION.md')
+        elif args.action=='character-sheet':
+            from .character_reference import review_sheet
+            print('Review:',review_sheet(CHARACTERS,root/'character_review.jpg'))
         elif args.action=='approve':
             if not args.asset:
                 raise ValueError('--asset is required')
@@ -300,7 +330,7 @@ def main(argv=None):
             else:
                 assemble(root,story,state,mock=False)
         else:
-            plan=make_plan(args.action,root,story,p,state,args.shot)
+            plan=make_plan(args.action,root,story,p,state,args.shot,args.views)
             approval=digest(plan)
             (root/'quotes').mkdir(exist_ok=True)
             save(root/'quotes'/f'{approval}.json',plan)

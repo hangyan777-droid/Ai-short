@@ -6,6 +6,8 @@ Episode 01: **《那年夏天，她坐在我前面》** / **あの夏、君は�
 
 Haruto has a quiet crush on Aoi, the girl sitting in front of him. Borrowing an eraser becomes a summer memory; a graduation note reveals her feelings. Their romance stays innocent. Both are original fictional 17-year-old Japanese students, with natural faces and ordinary school clothing; no celebrity imitation, anime or idol styling.
 
+Current character-only preparation: [six prompts, estimate, secure key setup and review steps](film/campus_love/CHARACTER_PLAN.md). Start with `characters --episode 1 --views front`; approve the faces before `--views side full`.
+
 ## What exists now
 
 - [Screenplay, Character Bible and twelve detailed shot prompts](film/campus_love/PRODUCTION.md).
