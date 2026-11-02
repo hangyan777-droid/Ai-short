@@ -203,44 +203,17 @@ def assemble(data,folder,mock=False):
 
 
 def main():
-    load_dotenv(ROOT/'.env')
-    parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action',choices=['mock','quote','generate','assemble'])
-    parser.add_argument('--output',type=Path,required=True)
-    parser.add_argument('--usd-per-second')
-    parser.add_argument('--rate',default='1.40')
-    parser.add_argument('--margin',default='0.15')
-    parser.add_argument('--prior-cad',default='0')
-    parser.add_argument('--price-source',default='')
-    parser.add_argument('--approve-quote',default='')
-    args=parser.parse_args()
-    folder=args.output.resolve()
-    folder.mkdir(parents=True,exist_ok=True)
-    data=pack()
-    with lock(folder):
-        if args.action=='quote':
-            if (folder/'ledger.json').exists() or (folder/'MOCK_ONLY').exists():
-                raise ValueError('Use an unused production directory; preserve existing spend ledger')
-            quote=make_quote(data,args.usd_per_second,args.rate,args.margin,args.prior_cad,args.price_source)
-            save(folder/'quote.json',quote)
-            print(json.dumps(quote,indent=2)); print('Approval hash:',digest(quote))
-        elif args.action=='generate':
-            if (folder/'MOCK_ONLY').exists():
-                raise ValueError('Never mix paid generation with mock assets')
-            generate(data,folder,args.approve_quote)
-        elif args.action=='mock':
-            if (folder/'quote.json').exists() or (folder/'ledger.json').exists():
-                raise ValueError('Never overwrite real production with test assets')
-            (folder/'MOCK_ONLY').touch()
-            for index,shot in enumerate(data['shots']):
-                command(['ffmpeg','-v','error','-y','-f','lavfi','-i',f'color=c=0x{["27374d","526d82","66545e"][index%3]}:s=360x640:r=24:d=5','-c:v','libx264','-preset','ultrafast','-pix_fmt','yuv420p',str(folder/f"{shot['id']}.mp4")])
-            assemble(data,folder,True)
-        else:
-            if not (folder/'MOCK_ONLY').exists():
-                ledger=json.loads((folder/'ledger.json').read_text())
-                if any(ledger['shots'].get(s['id'],{}).get('status')!='complete' for s in data['shots']):
-                    raise ValueError('All real shots must be complete before final assembly')
-            assemble(data,folder,(folder/'MOCK_ONLY').exists())
+    # Only the CAMPUS LOVE CLI is exposed. Legacy helpers remain for regression tests.
+    import sys
+    from .campus import main as campus_main
+    try:
+        return campus_main(sys.argv[1:])
+    except (ValueError, OSError, RuntimeError) as error:
+        print(f'Cannot continue: {error}', file=sys.stderr)
+        raise SystemExit(2)
+    except httpx.HTTPError:
+        print('Network request failed. State and reservations are preserved. Reconcile before approving any paid retry.', file=sys.stderr)
+        raise SystemExit(2)
 
 if __name__=='__main__':
     main()

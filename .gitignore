@@ -4,3 +4,7 @@ __pycache__/
 .pytest_cache/
 outputs/
 data/
+# Permanent generated references stay local/in the environment snapshot; never secrets.
+assets/characters/**/*.png
+assets/characters/**/*.partial*
+film/campus_love/pricing.local.json

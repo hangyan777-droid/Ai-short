@@ -1,0 +1,18 @@
+{
+  "verified_at": null,
+  "verification_note": "Illustrative only. Live pricing page could not be read in this environment (HTTP 403). Confirm official model pricing and durations before marking verified.",
+  "sources": [
+    "https://docs.dev.runwayml.com/guides/pricing/",
+    "https://openai.com/api/pricing/"
+  ],
+  "usd_to_cad": "1.40",
+  "tax_margin": "0.15",
+  "gen4_image_usd": "0.08",
+  "gen4_turbo_usd_per_second": "0.05",
+  "kling3.0_standard_usd_per_second": "0.10",
+  "tts_usd_per_million_chars": "15.00",
+  "retry_video_shots": 2,
+  "retry_images": 2,
+  "retry_audio_usd": "0.02",
+  "capabilities_verified": false
+}

@@ -1,0 +1,377 @@
+{
+  "project": "CAMPUS LOVE",
+  "episode": 1,
+  "title_zh": "那年夏天，她坐在我前面",
+  "title_ja": "あの夏、君は僕の前の席にいた。",
+  "duration": 60,
+  "width": 720,
+  "height": 1280,
+  "fps": 24,
+  "style": "Photorealistic Japanese live-action coming-of-age film. Nostalgic summer afternoon, natural skin texture, restrained warm grade, softly desaturated highlights, soft shadows, 35mm composition, gentle movement. No anime, idol styling, plastic skin, flashy effects, celebrity likeness or generated lettering.",
+  "characters": {
+    "haruto": {
+      "name": "Haruto Sato",
+      "japanese_name": "佐藤陽翔",
+      "age": 17,
+      "personality": "Quiet, thoughtful, gentle, slightly shy.",
+      "appearance": "Fictional Japanese teenage boy, natural youthful facial features, soft black layered hair with a natural fringe, dark-brown eyes, slim subtly athletic build, realistic skin texture, gentle expressions. Not overly muscular; no idol styling.",
+      "wardrobe": "Summer: white Japanese school shirt, navy trousers, plain white sneakers. Graduation: same shirt and trousers with dark navy school blazer. No jewelry.",
+      "voice": "Quiet natural Japanese male narrator; reflective, unhurried. Generic synthetic voice, not a celebrity imitation."
+    },
+    "aoi": {
+      "name": "Aoi Nakamura",
+      "japanese_name": "中村葵",
+      "age": 17,
+      "personality": "Warm, gentle, playful, observant.",
+      "appearance": "Fictional Japanese teenage girl, natural youthful facial proportions, straight dark hair with soft bangs, dark-brown eyes, expressive gentle face, realistic skin texture, no visible makeup; no idol styling.",
+      "wardrobe": "White Japanese school blouse, navy knee-length pleated skirt, loose ivory knit cardigan, white socks, brown loafers. Same hairstyle throughout. Graduation: same clothes, neat cardigan.",
+      "voice": "Warm natural Japanese female voice, soft everyday delivery; no celebrity imitation."
+    }
+  },
+  "continuity": "Shot 11 is a brief flashback to Aoi preparing her reply, minutes before shot 10. Shot 12 returns to present. Her reply was tucked into the notebook returned to Haruto. Summer eraser stays plain white; navy umbrella appears only in shots 7–8. Maintain front/back classroom seating and same left-side windows.",
+  "shots": [
+    {
+      "id": "01",
+      "start": 0,
+      "seconds": 5,
+      "title": "借りた消しゴム",
+      "location": "sunny classroom",
+      "visual": "Aoi turns gently from the seat directly in front of Haruto. Sunlight grazes her bangs. Haruto looks surprised, quietly attentive.",
+      "camera_movement": "Slow push-in, tiny eye movement; lips resting, no visible speaking. The line is off-camera memory audio.",
+      "emotion": "nervous anticipation",
+      "characters": [
+        "aoi",
+        "haruto"
+      ],
+      "image_prompt": "Photorealistic Japanese live-action coming-of-age film. Nostalgic summer afternoon, natural skin texture, restrained warm grade, softly desaturated highlights, soft shadows, 35mm composition, gentle movement. No anime, idol styling, plastic skin, flashy effects, celebrity likeness or generated lettering. sunny classroom. Aoi turns gently from the seat directly in front of Haruto. Sunlight grazes her bangs. Haruto looks surprised, quietly attentive. Match identities and wardrobe from @aoi, @haruto. Vertical 9:16, uncluttered composition. No visible writing.",
+      "video_prompt": "Japanese live-action youth romance, realistic skin, soft natural light. Slow push-in, tiny eye movement; lips resting, no visible speaking. The line is off-camera memory audio. Aoi turns gently from the seat directly in front of Haruto. Sunlight grazes her bangs. Haruto looks surprised, quietly attentive. Preserve first-frame faces, hair, uniforms, objects and scene geometry. No captions, no logos, no exaggerated acting.",
+      "model": "gen4_turbo",
+      "audio": {
+        "text": "ねえ、消しゴム貸してくれる？",
+        "speaker": "aoi",
+        "kind": "dialogue",
+        "start_offset": 0.35,
+        "max_seconds": 4.4
+      },
+      "subtitle_zh": "喂，能借我一下橡皮吗？",
+      "overlay_ja": "",
+      "ambience": "classroom_cicadas",
+      "wardrobe_season": "summer",
+      "review": "Unreviewed: check identity, age-appropriate wardrobe, eyelines, hands, props and temporal continuity."
+    },
+    {
+      "id": "02",
+      "start": 5,
+      "seconds": 5,
+      "title": "指先の距離",
+      "location": "same classroom desk",
+      "visual": "Insert of Haruto passing one small plain white eraser across a wooden desk. His fingers and Aoi’s almost touch; only two hands visible.",
+      "camera_movement": "Locked close-up, one slow simple handover; avoid finger interlocking.",
+      "emotion": "first connection",
+      "characters": [
+        "haruto",
+        "aoi"
+      ],
+      "image_prompt": "Photorealistic Japanese live-action coming-of-age film. Nostalgic summer afternoon, natural skin texture, restrained warm grade, softly desaturated highlights, soft shadows, 35mm composition, gentle movement. No anime, idol styling, plastic skin, flashy effects, celebrity likeness or generated lettering. same classroom desk. Insert of Haruto passing one small plain white eraser across a wooden desk. His fingers and Aoi’s almost touch; only two hands visible. Match identities and wardrobe from @haruto, @aoi. Vertical 9:16, uncluttered composition. No visible writing.",
+      "video_prompt": "Japanese live-action youth romance, realistic skin, soft natural light. Locked close-up, one slow simple handover; avoid finger interlocking. Insert of Haruto passing one small plain white eraser across a wooden desk. His fingers and Aoi’s almost touch; only two hands visible. Preserve first-frame faces, hair, uniforms, objects and scene geometry. No captions, no logos, no exaggerated acting.",
+      "model": "gen4_turbo",
+      "audio": {
+        "text": "",
+        "speaker": "haruto",
+        "kind": "ambience",
+        "start_offset": 0.35,
+        "max_seconds": 4.4
+      },
+      "subtitle_zh": "他们的指尖，差一点碰到。",
+      "overlay_ja": "",
+      "ambience": "classroom_cicadas",
+      "wardrobe_season": "summer",
+      "review": "Unreviewed: check identity, age-appropriate wardrobe, eyelines, hands, props and temporal continuity."
+    },
+    {
+      "id": "03",
+      "start": 10,
+      "seconds": 5,
+      "title": "たったそれだけ",
+      "location": "same classroom",
+      "visual": "Haruto looks down shyly, warm sunlight grazing his cheek; Aoi remains softly out of focus ahead.",
+      "camera_movement": "Static medium close-up, delicate breathing; no speaking mouth.",
+      "emotion": "shyness",
+      "characters": [
+        "haruto"
+      ],
+      "image_prompt": "Photorealistic Japanese live-action coming-of-age film. Nostalgic summer afternoon, natural skin texture, restrained warm grade, softly desaturated highlights, soft shadows, 35mm composition, gentle movement. No anime, idol styling, plastic skin, flashy effects, celebrity likeness or generated lettering. same classroom. Haruto looks down shyly, warm sunlight grazing his cheek; Aoi remains softly out of focus ahead. Match identities and wardrobe from @haruto. Vertical 9:16, uncluttered composition. No visible writing.",
+      "video_prompt": "Japanese live-action youth romance, realistic skin, soft natural light. Static medium close-up, delicate breathing; no speaking mouth. Haruto looks down shyly, warm sunlight grazing his cheek; Aoi remains softly out of focus ahead. Preserve first-frame faces, hair, uniforms, objects and scene geometry. No captions, no logos, no exaggerated acting.",
+      "model": "gen4_turbo",
+      "audio": {
+        "text": "たったそれだけのことなのに。",
+        "speaker": "haruto",
+        "kind": "narration",
+        "start_offset": 0.35,
+        "max_seconds": 4.4
+      },
+      "subtitle_zh": "明明，只是那么一件小事。",
+      "overlay_ja": "",
+      "ambience": "classroom_cicadas",
+      "wardrobe_season": "summer",
+      "review": "Unreviewed: check identity, age-appropriate wardrobe, eyelines, hands, props and temporal continuity."
+    },
+    {
+      "id": "04",
+      "start": 15,
+      "seconds": 5,
+      "title": "前の席",
+      "location": "same classroom",
+      "visual": "Over Haruto’s shoulder behind an unmarked notebook: Aoi smiles gently toward one classmate whose face stays out of frame.",
+      "camera_movement": "Gentle focus shift to Aoi; restrained smile, no background crowds.",
+      "emotion": "secret affection",
+      "characters": [
+        "haruto",
+        "aoi"
+      ],
+      "image_prompt": "Photorealistic Japanese live-action coming-of-age film. Nostalgic summer afternoon, natural skin texture, restrained warm grade, softly desaturated highlights, soft shadows, 35mm composition, gentle movement. No anime, idol styling, plastic skin, flashy effects, celebrity likeness or generated lettering. same classroom. Over Haruto’s shoulder behind an unmarked notebook: Aoi smiles gently toward one classmate whose face stays out of frame. Match identities and wardrobe from @haruto, @aoi. Vertical 9:16, uncluttered composition. No visible writing.",
+      "video_prompt": "Japanese live-action youth romance, realistic skin, soft natural light. Gentle focus shift to Aoi; restrained smile, no background crowds. Over Haruto’s shoulder behind an unmarked notebook: Aoi smiles gently toward one classmate whose face stays out of frame. Preserve first-frame faces, hair, uniforms, objects and scene geometry. No captions, no logos, no exaggerated acting.",
+      "model": "gen4_turbo",
+      "audio": {
+        "text": "前の席の君を、目で追っていた。",
+        "speaker": "haruto",
+        "kind": "narration",
+        "start_offset": 0.35,
+        "max_seconds": 4.4
+      },
+      "subtitle_zh": "我总是忍不住，看向坐在前面的你。",
+      "overlay_ja": "",
+      "ambience": "classroom_cicadas",
+      "wardrobe_season": "summer",
+      "review": "Unreviewed: check identity, age-appropriate wardrobe, eyelines, hands, props and temporal continuity."
+    },
+    {
+      "id": "05",
+      "start": 20,
+      "seconds": 5,
+      "title": "忘れられない夏",
+      "location": "same classroom late summer",
+      "visual": "White curtains drift in the breeze. Haruto looks toward Aoi’s empty seat directly ahead. Same desk and window layout.",
+      "camera_movement": "Slow lateral slide; curtain and hair move naturally.",
+      "emotion": "longing",
+      "characters": [
+        "haruto"
+      ],
+      "image_prompt": "Photorealistic Japanese live-action coming-of-age film. Nostalgic summer afternoon, natural skin texture, restrained warm grade, softly desaturated highlights, soft shadows, 35mm composition, gentle movement. No anime, idol styling, plastic skin, flashy effects, celebrity likeness or generated lettering. same classroom late summer. White curtains drift in the breeze. Haruto looks toward Aoi’s empty seat directly ahead. Same desk and window layout. Match identities and wardrobe from @haruto. Vertical 9:16, uncluttered composition. No visible writing.",
+      "video_prompt": "Japanese live-action youth romance, realistic skin, soft natural light. Slow lateral slide; curtain and hair move naturally. White curtains drift in the breeze. Haruto looks toward Aoi’s empty seat directly ahead. Same desk and window layout. Preserve first-frame faces, hair, uniforms, objects and scene geometry. No captions, no logos, no exaggerated acting.",
+      "model": "gen4_turbo",
+      "audio": {
+        "text": "僕には、忘れられない夏になった。",
+        "speaker": "haruto",
+        "kind": "narration",
+        "start_offset": 0.35,
+        "max_seconds": 4.4
+      },
+      "subtitle_zh": "那成了我，无法忘记的夏天。",
+      "overlay_ja": "",
+      "ambience": "classroom_cicadas",
+      "wardrobe_season": "summer",
+      "review": "Unreviewed: check identity, age-appropriate wardrobe, eyelines, hands, props and temporal continuity."
+    },
+    {
+      "id": "06",
+      "start": 25,
+      "seconds": 5,
+      "title": "帰り道",
+      "location": "quiet Japanese residential street",
+      "visual": "Haruto and Aoi walk home side by side, school bags in outer hands, respectful distance, low sun casting long shadows.",
+      "camera_movement": "Wide side tracking, natural walking, no kiss or hand-holding.",
+      "emotion": "warmth",
+      "characters": [
+        "haruto",
+        "aoi"
+      ],
+      "image_prompt": "Photorealistic Japanese live-action coming-of-age film. Nostalgic summer afternoon, natural skin texture, restrained warm grade, softly desaturated highlights, soft shadows, 35mm composition, gentle movement. No anime, idol styling, plastic skin, flashy effects, celebrity likeness or generated lettering. quiet Japanese residential street. Haruto and Aoi walk home side by side, school bags in outer hands, respectful distance, low sun casting long shadows. Match identities and wardrobe from @haruto, @aoi. Vertical 9:16, uncluttered composition. No visible writing.",
+      "video_prompt": "Japanese live-action youth romance, realistic skin, soft natural light. Wide side tracking, natural walking, no kiss or hand-holding. Haruto and Aoi walk home side by side, school bags in outer hands, respectful distance, low sun casting long shadows. Preserve first-frame faces, hair, uniforms, objects and scene geometry. No captions, no logos, no exaggerated acting.",
+      "model": "gen4_turbo",
+      "audio": {
+        "text": "帰り道さえ、少し短く感じた。",
+        "speaker": "haruto",
+        "kind": "narration",
+        "start_offset": 0.35,
+        "max_seconds": 4.4
+      },
+      "subtitle_zh": "连放学的路，都好像变短了。",
+      "overlay_ja": "",
+      "ambience": "footsteps",
+      "wardrobe_season": "summer",
+      "review": "Unreviewed: check identity, age-appropriate wardrobe, eyelines, hands, props and temporal continuity."
+    },
+    {
+      "id": "07",
+      "start": 30,
+      "seconds": 5,
+      "title": "雨の校門",
+      "location": "rainy covered school entrance",
+      "visual": "Aoi stops under the eaves and looks toward rain. Haruto stands one step behind with one closed navy umbrella.",
+      "camera_movement": "Medium shot, gentle rain beyond dry foreground; Aoi checks her empty hand, no speaking.",
+      "emotion": "hesitation",
+      "characters": [
+        "aoi",
+        "haruto"
+      ],
+      "image_prompt": "Photorealistic Japanese live-action coming-of-age film. Nostalgic summer afternoon, natural skin texture, restrained warm grade, softly desaturated highlights, soft shadows, 35mm composition, gentle movement. No anime, idol styling, plastic skin, flashy effects, celebrity likeness or generated lettering. rainy covered school entrance. Aoi stops under the eaves and looks toward rain. Haruto stands one step behind with one closed navy umbrella. Match identities and wardrobe from @aoi, @haruto. Vertical 9:16, uncluttered composition. No visible writing.",
+      "video_prompt": "Japanese live-action youth romance, realistic skin, soft natural light. Medium shot, gentle rain beyond dry foreground; Aoi checks her empty hand, no speaking. Aoi stops under the eaves and looks toward rain. Haruto stands one step behind with one closed navy umbrella. Preserve first-frame faces, hair, uniforms, objects and scene geometry. No captions, no logos, no exaggerated acting.",
+      "model": "gen4_turbo",
+      "audio": {
+        "text": "雨の日、君は傘を忘れた。",
+        "speaker": "haruto",
+        "kind": "narration",
+        "start_offset": 0.35,
+        "max_seconds": 4.4
+      },
+      "subtitle_zh": "下雨那天，你忘了带伞。",
+      "overlay_ja": "",
+      "ambience": "rain",
+      "wardrobe_season": "summer",
+      "review": "Unreviewed: check identity, age-appropriate wardrobe, eyelines, hands, props and temporal continuity."
+    },
+    {
+      "id": "08",
+      "start": 35,
+      "seconds": 5,
+      "title": "ひとつの傘",
+      "location": "same school street in rain",
+      "visual": "Both walk under one open plain navy umbrella, Haruto holds the shaft, shoulders nearly touch.",
+      "camera_movement": "Gentle side tracking; keep umbrella shape stable and faces natural.",
+      "emotion": "quiet tension",
+      "characters": [
+        "haruto",
+        "aoi"
+      ],
+      "image_prompt": "Photorealistic Japanese live-action coming-of-age film. Nostalgic summer afternoon, natural skin texture, restrained warm grade, softly desaturated highlights, soft shadows, 35mm composition, gentle movement. No anime, idol styling, plastic skin, flashy effects, celebrity likeness or generated lettering. same school street in rain. Both walk under one open plain navy umbrella, Haruto holds the shaft, shoulders nearly touch. Match identities and wardrobe from @haruto, @aoi. Vertical 9:16, uncluttered composition. No visible writing.",
+      "video_prompt": "Japanese live-action youth romance, realistic skin, soft natural light. Gentle side tracking; keep umbrella shape stable and faces natural. Both walk under one open plain navy umbrella, Haruto holds the shaft, shoulders nearly touch. Preserve first-frame faces, hair, uniforms, objects and scene geometry. No captions, no logos, no exaggerated acting.",
+      "model": "gen4_turbo",
+      "audio": {
+        "text": "近いのに、何も言えなかった。",
+        "speaker": "haruto",
+        "kind": "narration",
+        "start_offset": 0.35,
+        "max_seconds": 4.4
+      },
+      "subtitle_zh": "明明靠得那么近，却什么也说不出口。",
+      "overlay_ja": "",
+      "ambience": "rain",
+      "wardrobe_season": "summer",
+      "review": "Unreviewed: check identity, age-appropriate wardrobe, eyelines, hands, props and temporal continuity."
+    },
+    {
+      "id": "09",
+      "start": 40,
+      "seconds": 5,
+      "title": "卒業の日",
+      "location": "empty graduation classroom",
+      "visual": "Haruto in navy blazer packs an old unmarked notebook, then pauses at Aoi’s former seat. Empty classroom, soft spring light.",
+      "camera_movement": "Slow pullback, small pause; no floating objects or background students.",
+      "emotion": "bittersweet",
+      "characters": [
+        "haruto"
+      ],
+      "image_prompt": "Photorealistic Japanese live-action coming-of-age film. Nostalgic summer afternoon, natural skin texture, restrained warm grade, softly desaturated highlights, soft shadows, 35mm composition, gentle movement. No anime, idol styling, plastic skin, flashy effects, celebrity likeness or generated lettering. empty graduation classroom. Haruto in navy blazer packs an old unmarked notebook, then pauses at Aoi’s former seat. Empty classroom, soft spring light. Match identities and wardrobe from @haruto. Vertical 9:16, uncluttered composition. No visible writing.",
+      "video_prompt": "Japanese live-action youth romance, realistic skin, soft natural light. Slow pullback, small pause; no floating objects or background students. Haruto in navy blazer packs an old unmarked notebook, then pauses at Aoi’s former seat. Empty classroom, soft spring light. Preserve first-frame faces, hair, uniforms, objects and scene geometry. No captions, no logos, no exaggerated acting.",
+      "model": "gen4_turbo",
+      "audio": {
+        "text": "そして、卒業の日。",
+        "speaker": "haruto",
+        "kind": "narration",
+        "start_offset": 0.35,
+        "max_seconds": 4.4
+      },
+      "subtitle_zh": "后来，到了毕业那天。",
+      "overlay_ja": "",
+      "ambience": "room",
+      "wardrobe_season": "graduation",
+      "review": "Unreviewed: check identity, age-appropriate wardrobe, eyelines, hands, props and temporal continuity."
+    },
+    {
+      "id": "10",
+      "start": 45,
+      "seconds": 5,
+      "title": "折りたたんだ返事",
+      "location": "same graduation classroom desk",
+      "visual": "Macro insert: inside the old notebook recently returned to Haruto is a carefully folded blank-looking note. His hand opens the notebook; do not reveal writing.",
+      "camera_movement": "One gentle rack focus from notebook edge to folded paper, no generated text.",
+      "emotion": "surprise",
+      "characters": [
+        "haruto"
+      ],
+      "image_prompt": "Photorealistic Japanese live-action coming-of-age film. Nostalgic summer afternoon, natural skin texture, restrained warm grade, softly desaturated highlights, soft shadows, 35mm composition, gentle movement. No anime, idol styling, plastic skin, flashy effects, celebrity likeness or generated lettering. same graduation classroom desk. Macro insert: inside the old notebook recently returned to Haruto is a carefully folded blank-looking note. His hand opens the notebook; do not reveal writing. Match identities and wardrobe from @haruto. Vertical 9:16, uncluttered composition. No visible writing.",
+      "video_prompt": "Japanese live-action youth romance, realistic skin, soft natural light. One gentle rack focus from notebook edge to folded paper, no generated text. Macro insert: inside the old notebook recently returned to Haruto is a carefully folded blank-looking note. His hand opens the notebook; do not reveal writing. Preserve first-frame faces, hair, uniforms, objects and scene geometry. No captions, no logos, no exaggerated acting.",
+      "model": "gen4_turbo",
+      "audio": {
+        "text": "返されたノートに、小さな返事があった。",
+        "speaker": "haruto",
+        "kind": "narration",
+        "start_offset": 0.35,
+        "max_seconds": 4.4
+      },
+      "subtitle_zh": "还回来的笔记本里，藏着一封小小的回信。",
+      "overlay_ja": "",
+      "ambience": "room",
+      "wardrobe_season": "graduation",
+      "review": "Unreviewed: check identity, age-appropriate wardrobe, eyelines, hands, props and temporal continuity."
+    },
+    {
+      "id": "11",
+      "start": 50,
+      "seconds": 5,
+      "title": "葵の返事",
+      "location": "graduation classroom window, flashback minutes earlier",
+      "visual": "Aoi at the window unfolds her own reply before tucking it into Haruto’s notebook. Close-up of her slightly emotional face with blank paper at bottom of frame; no shot-internal cut.",
+      "camera_movement": "Very slow push-in; lower gaze gently to paper, no lip movement.",
+      "emotion": "hope",
+      "characters": [
+        "aoi"
+      ],
+      "image_prompt": "Photorealistic Japanese live-action coming-of-age film. Nostalgic summer afternoon, natural skin texture, restrained warm grade, softly desaturated highlights, soft shadows, 35mm composition, gentle movement. No anime, idol styling, plastic skin, flashy effects, celebrity likeness or generated lettering. graduation classroom window, flashback minutes earlier. Aoi at the window unfolds her own reply before tucking it into Haruto’s notebook. Close-up of her slightly emotional face with blank paper at bottom of frame; no shot-internal cut. Match identities and wardrobe from @aoi. Vertical 9:16, uncluttered composition. No visible writing.",
+      "video_prompt": "Japanese live-action youth romance, realistic skin, soft natural light. Very slow push-in; lower gaze gently to paper, no lip movement. Aoi at the window unfolds her own reply before tucking it into Haruto’s notebook. Close-up of her slightly emotional face with blank paper at bottom of frame; no shot-internal cut. Preserve first-frame faces, hair, uniforms, objects and scene geometry. No captions, no logos, no exaggerated acting.",
+      "model": "gen4_turbo",
+      "audio": {
+        "text": "実は、私もずっと好きだった。",
+        "speaker": "aoi",
+        "kind": "voiceover",
+        "start_offset": 0.35,
+        "max_seconds": 4.4
+      },
+      "subtitle_zh": "其实，我也一直喜欢你。",
+      "overlay_ja": "実は、私もずっと好きだった。",
+      "ambience": "room",
+      "wardrobe_season": "graduation",
+      "review": "Unreviewed: check identity, age-appropriate wardrobe, eyelines, hands, props and temporal continuity."
+    },
+    {
+      "id": "12",
+      "start": 55,
+      "seconds": 5,
+      "title": "もし、あの日",
+      "location": "graduation classroom doorway, present again",
+      "visual": "Haruto turns from the notebook toward the door. Aoi stands quietly in warm sunset light, a shy hopeful smile, respectful distance.",
+      "camera_movement": "Slow push toward Aoi, Haruto’s shoulder foreground. Hold expressions. Editor fades final second to black.",
+      "emotion": "unspoken possibility",
+      "characters": [
+        "haruto",
+        "aoi"
+      ],
+      "image_prompt": "Photorealistic Japanese live-action coming-of-age film. Nostalgic summer afternoon, natural skin texture, restrained warm grade, softly desaturated highlights, soft shadows, 35mm composition, gentle movement. No anime, idol styling, plastic skin, flashy effects, celebrity likeness or generated lettering. graduation classroom doorway, present again. Haruto turns from the notebook toward the door. Aoi stands quietly in warm sunset light, a shy hopeful smile, respectful distance. Match identities and wardrobe from @haruto, @aoi. Vertical 9:16, uncluttered composition. No visible writing.",
+      "video_prompt": "Japanese live-action youth romance, realistic skin, soft natural light. Slow push toward Aoi, Haruto’s shoulder foreground. Hold expressions. Editor fades final second to black. Haruto turns from the notebook toward the door. Aoi stands quietly in warm sunset light, a shy hopeful smile, respectful distance. Preserve first-frame faces, hair, uniforms, objects and scene geometry. No captions, no logos, no exaggerated acting.",
+      "model": "gen4_turbo",
+      "audio": {
+        "text": "もし、あの日伝えていたら。",
+        "speaker": "haruto",
+        "kind": "narration",
+        "start_offset": 0.35,
+        "max_seconds": 4.4
+      },
+      "subtitle_zh": "如果那天，我们勇敢一点……",
+      "overlay_ja": "もし、あの日伝えていたら。",
+      "ambience": "room",
+      "wardrobe_season": "graduation",
+      "review": "Unreviewed: check identity, age-appropriate wardrobe, eyelines, hands, props and temporal continuity."
+    }
+  ]
+}
