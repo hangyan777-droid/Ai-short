@@ -1,82 +1,45 @@
-# Campus Drama Factory
+# The Seat Beside You — AI romance film production
 
-A local, free MVP for producing 60-second school romance episode prototypes. Python FastAPI backend, Streamlit dashboard, SQLite production state and FFmpeg editing. Stories focus on innocent crushes, friendship, misunderstandings and graduation.
+The project now focuses on producing **one real, cinematic, 60-second Korean youth-romance short**, not building an app. The earlier dashboard/backend are paused; their instructions are archived in `docs/APP_ARCHIVE.md`.
 
-**Current milestone:** complete mock production with test footage. No OpenAI, Runway or TTS requests are made. Output is colored placeholder footage, silent audio and timed English subtitle tracks, not photorealistic AI footage. There is no paid generation switch.
+## Start here
 
-## Project structure
+Read [the production plan](film/PRODUCTION.md). The full original script, two locked character descriptions, twelve detailed still-image prompts, motion prompts and subtitle timeline are in [film/episode.json](film/episode.json).
 
-- `app.py`: local dashboard and backend client
-- `drama_factory/api.py`: FastAPI jobs, character library, review and export endpoints
-- `drama_factory/store.py`: SQLite state and transactional CAD reservations
-- `drama_factory/production.py`: resumable shot rendering and two-aspect assembly
-- `drama_factory/budget.py`: conservative USD-to-CAD quotes with tax margin
-- `drama_factory/core.py`: deterministic story generator and original rendering utilities
-- `drama_factory/providers.py`: disabled Runway adapter and provider protocol
-- `tests/`: API, dashboard, FFmpeg and budget tests
-- `data/`: ignored database and generated assets
+The film is vertical 9:16, twelve 5-second shots, with an innocent high-school first-love plot. Both fictional protagonists are 18. The intended look is photorealistic with warm spring light, stylish uniforms and natural acting. Approved reference portraits and shot keyframes are required to preserve identity; they are not yet created.
 
-## Windows setup (PowerShell)
+## Install
 
-Install Python 3.11+ and FFmpeg, with `ffmpeg` and `ffprobe` on PATH. For example, use `winget install Python.Python.3.12` and `winget install Gyan.FFmpeg`, then reopen the terminal. Verify `python --version`, `ffmpeg -version` and `ffprobe -version`.
+Requires Python 3.11+, FFmpeg/ffprobe with libx264 and the subtitles/libass filter, and a usable font. Ubuntu: `sudo apt-get install ffmpeg fonts-dejavu-core`. Windows: install Python and FFmpeg, reopen PowerShell, then run:
 
 ```powershell
-cd Ai-short
 python -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements.txt
-Copy-Item .env.example .env
-.venv\Scripts\python.exe -m uvicorn drama_factory.api:app --host 127.0.0.1 --port 8000
+.venv\Scripts\python.exe -m drama_factory.film mock --output outputs/film-test
 ```
 
-In a second terminal in the same repository:
-
-```powershell
-.venv\Scripts\python.exe -m streamlit run app.py --browser.gatherUsageStats false
-```
-
-Open Streamlit's printed local address. The backend API documentation is available locally at port 8000 under `/docs`.
-
-## Linux/macOS setup
-
-Install Python 3.11+ and FFmpeg (Ubuntu: `sudo apt-get install ffmpeg`; macOS: `brew install ffmpeg`).
+On Linux/macOS:
 
 ```bash
-cd /workspace/Ai-short  # or your local checkout
 python -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
-cp .env.example .env
-.venv/bin/python -m uvicorn drama_factory.api:app --host 127.0.0.1 --port 8000
-# Second terminal, same checkout:
-.venv/bin/python -m streamlit run app.py --browser.gatherUsageStats false
+.venv/bin/python -m drama_factory.film mock --output outputs/film-test
 ```
 
-Use one backend process per SQLite database; multiple API workers are unsupported. This local MVP has no authentication: bind to loopback, and do not expose it publicly. Keep both terminals in the same working directory. Credentials belong only in `.env` or environment variables; never commit keys.
+This free test checks editing, burned-in subtitles, an original synthesized music score, and 720×1280 H.264/AAC output. **`PIPELINE_TEST.mp4` is only a technical test, never the final AI film.**
 
-## Workflow and persistence
+## Paid production is approval-gated
 
-Save reusable male and female profiles in Character Library, including hairstyle, face, clothing, voice and reference-image metadata. Generate New Episode creates six ten-second shots with an opening hook, emotional progression, misunderstanding/twist and ending. The template includes your premise in prompts; it does not yet use an LLM to interpret it. Preview the structured storyboard, refresh shot progress, inspect footage, and mark consistency as approved or inconsistent. This is human review, not automatic visual detection.
+No paid calls have been made. Do not provide keys in chat. Before production, prepare and approve the 12 actual 720×1280 PNG keyframes, verify current Runway pricing, account funding and prior image costs, and obtain user approval of the complete estimate within CAD $18. Then configure `RUNWAY_API_KEY` securely in `.env`.
 
-Exports include 9:16 (360×640) and 16:9 (640×360) MP4s, SRT and storyboard JSON. Landscape uses padded portrait footage. Embedded subtitles can be enabled in compatible players; browser support varies. Original English dialogue is generated by the template; custom Chinese text and multilingual TTS are future work. There is no unnecessary upscaling. Music/SFX are intentionally omitted until user-supplied licensed assets and mixing are implemented.
+The CLI supports `quote`, `generate`, and `assemble`; exact commands and known prerequisites are in the production plan. It uses verified Runway image-to-video and task endpoints, saves task IDs and conservative reservations, resumes polling, and refuses automatic paid resubmission after an ambiguous request. Separate HTTP clients keep API authorization out of asset downloads. Retain the production ledger across failures; it is not an actual-billing reconciliation system.
 
-SQLite and assets live under `CAMPUS_DATA_DIR` (default `data`). Completed shots survive process restarts. On backend restart interrupted running jobs become failed; select Resume Production to reuse completed shot files and rebuild exports. Failed renders retain their error. Queued jobs can also resume. Files are written through temporary MP4s before completion is recorded. Do not run multiple backend processes on one data directory. Data is retained until manually removed.
-
-## Budget and provider roadmap
-
-Hard episode cap: CAD $18. Quotes use Decimal, configurable USD/CAD and tax margin inputs, rounding upward to cents. SQLite atomically reserves costs before each mock rendering request; retries must fit remaining committed/reserved spend. Request IDs prevent double reservation. Mock actual costs are recorded as zero. Interrupted reservations remain held conservatively. Actual paid cost reconciliation is not implemented; never treat mock accounting as a verified billing integration.
-
-`USD_TO_CAD`, `TAX_MARGIN`, OpenAI/Runway keys and TTS settings in `.env.example` describe future provider configuration; the mock path does not consume these settings or credentials. The cost utility accepts explicit rate/margin values for testing and future adapters.
-
-Next milestones, each separately tested before enabling spending:
-
-1. OpenAI structured story JSON with schema validation and budget reservation.
-2. Runway reference-image generation and image-to-video, using current official endpoint/model documentation. Gen-4 Turbo and Kling 3.0 Standard are requested candidates, **not verified supported models in this release**. No endpoints or unsupported capabilities are guessed.
-3. Persistent provider task IDs, bounded polling, idempotency, safe downloads, per-shot model choices, actual-charge reconciliation and review gates. Preflight all shots, exchange-rate/tax buffers and each potentially billable retry. Account-level provider controls are also required for a true billing cap.
-4. Configurable TTS, Chinese/English alignment, licensed music/SFX and visual consistency detection.
+Reference/keyframe creation and paid video generation still need key access, pricing approval, live API validation, and human quality review. Neither a working mock nor a successful API response proves the cinematic quality or character consistency of the final film. No automatic retries, upscaling, paid speech, music subscription, or web server is needed for this film workflow.
 
 ## Tests
 
 ```bash
-.venv/bin/python -m pytest -q
+.venv/bin/python -m pytest tests/test_film.py tests/test_workflow.py -q
 ```
 
-On Windows use `.venv\Scripts\python.exe -m pytest -q`. Tests generate and inspect real local MP4s, exercise API/dashboard production, persistence/resume, character edits, review flags, quote rounding and cap enforcement. They require FFmpeg but no credentials and spend no API credits.
+Tests use local inputs and stubbed API transports; they never spend credits. Legacy application tests remain available but are outside the active production direction.
